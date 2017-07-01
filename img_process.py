@@ -1,29 +1,26 @@
-import cv2
 import numpy as np
 from matplotlib import pyplot as plt
+from skimage import io
 
-img = cv2.imread('dog.png', 0)
+import filters
+from utils import img_utils
 
-#threshold normal no nivel de cinza 127
-ret1, th1 = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)
+img = io.imread('img/brain.jpg')
+# img = data.coins()
+noiseImg = img_utils.add_speckle(img, mean=0, var=0.5)
 
-#threshold com otsu
-ret2, th2 = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY+cv2.THRESH_OTSU)
+finalImg = filters.median_filter(noiseImg)
 
-#plota todas as imagens e os histogramas
-images = [img, 0, th1,
-            img, 0, th2]
+#img original
+plt.subplot(1,3,1),plt.imshow(img,'gray')
+plt.title('img original'), plt.xticks([]), plt.yticks([])
 
-#titulos das imagens
-titles = ['img original', 'histograma', 'global threshold 127',
-          'img original', 'histograma', 'otsu threshold']
+#noise img
+plt.subplot(1,3,2), plt.imshow(noiseImg,'gray')
+plt.title('noise image'), plt.xticks([]), plt.yticks([])
 
-for i in xrange(2):
-    plt.subplot(3,3,i*3+1),plt.imshow(images[i*3],'gray')
-    plt.title(titles[i*3]), plt.xticks([]), plt.yticks([])
-    plt.subplot(3,3,i*3+2),plt.hist(images[i*3].ravel(),256)
-    plt.title(titles[i*3+1]), plt.xticks([]), plt.yticks([])
-    plt.subplot(3,3,i*3+3),plt.imshow(images[i*3+2],'gray')
-    plt.title(titles[i*3+2]), plt.xticks([]), plt.yticks([])
+#median filter
+plt.subplot(1,3,3), plt.imshow(finalImg,'gray')
+plt.title('median filter'), plt.xticks([]), plt.yticks([])
 
 plt.show()
