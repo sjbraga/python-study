@@ -5,7 +5,7 @@ from skimage import filters, io, data
 
 import img_utils
 
-img = io.imread('brain.jpg')
+img = io.imread('img/brain.jpg')
 # img = data.coins()
 noiseImg = img_utils.add_speckle(img, mean=0.1, var=0.05)
 
