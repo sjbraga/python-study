@@ -1,9 +1,8 @@
 import numpy as np
-import scipy
 from matplotlib import pyplot as plt
 from skimage import filters, io, data
 
-import img_utils
+from utils import img_utils
 
 img = io.imread('img/brain.jpg')
 # img = data.coins()
