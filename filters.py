@@ -11,7 +11,12 @@ def lee_filter(image, window_size):
 
     N, M = img.shape
 
-    for i in range(N):
+    image_std = img.std()
+    image_mean = img.mean()
+
+    Q_HOMOGENEOUS = image_std / image_mean
+
+    for i in xrange(0,N):
         xleft = i - win_offset
         xright = i + win_offset
 
@@ -19,8 +24,12 @@ def lee_filter(image, window_size):
             xleft = 0
         if(xright > N):
             xright = N
+        
+        xright_slice = xright
+        if xright_slice < N:
+            xright_slice = xright_slice + 1
 
-        for j in range(M):
+        for j in xrange(0,M):
             yup = j - win_offset
             ydown = j + win_offset
 
@@ -29,11 +38,18 @@ def lee_filter(image, window_size):
             if(ydown > M):
                 ydown = M
 
+            ydown_slice = ydown
+            if ydown_slice < M:
+                ydown_slice = ydown_slice + 1
+
             pixel_value = img[i, j] #f(x,y)
             window = img[xleft:xright, yup:ydown] #W(x,y)
+            #print window
             alpha = lee_weight(window) #alpha
+            #print alpha
             window_mean = window.mean() #f^barra(x,y) media de f(x,y) e seus vizinhos = janela
-            new_pixel_value = alpha * pixel_value + (1.0 - alpha) * window_mean
+            #print window_mean
+            new_pixel_value = (alpha * pixel_value) + ((1.0 - alpha) * window_mean)
 
             finalImg[i,j] = round(new_pixel_value)
     
@@ -50,7 +66,15 @@ def lee_weight(window, q_hom=Q_HOMOGENEOUS):
 
     q2 = q * q #q(x,y)^2
 
+    if not q2:
+        q2 = COEF_VAR_DEFAULT
+
     a = 1.0 - (q2_hom / q2)
+    
+    if a < 0.0:
+        a = 0.0
+    else:
+        a = 1.0
 
     return a
 
