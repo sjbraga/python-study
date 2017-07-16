@@ -1,17 +1,25 @@
 import numpy as np
 from utils import fft
 
-x = np.random.random(4)
-transform = fft.DFT_slow(x)
-fast_transform = fft.FFT(x)
+raw_data = np.random.randint(0, 255, (3,100))
 
-print "Input"
-print x
+#raw_data.resize(50*50*3)
+#print raw_data.shape
 
-print "Transform"
-print transform
+data = raw_data.reshape(3, 10, 10)
+print data.shape
 
-print "Fast Transform"
-print fast_transform
+# x = np.random.random(4)
+# transform = fft.DFT_slow(x)
+# fast_transform = fft.FFT(x)
 
-print np.allclose(fast_transform, np.fft.fft(x))
+# print "Input"
+# print x
+
+# print "Transform"
+# print transform
+
+# print "Fast Transform"
+# print fast_transform
+
+# print np.allclose(fast_transform, np.fft.fft(x))
