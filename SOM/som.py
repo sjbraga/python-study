@@ -84,7 +84,7 @@ def training(data_to_train, network_dimensions=np.array([5,5]), n_iterations=200
                     #delta = entrada - w_atual
                     new_w = w + (l * influence * (t - w))
                     #coloca novo peso na matriz
-                    net[x, y, :] = new_w.reshape(1, 3)
+                    net[x, y, :] = new_w.reshape(1, 1)
 
     
     return net
