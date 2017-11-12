@@ -88,8 +88,3 @@ while iter<150:
     ax1.contour(phi, 0, colors='r')
     ax_u.set_data(phi)
     fig.canvas.draw()
-    # if np.mod(iter,20)==0:
-    #     f=plt.figure()
-    #     plt.imshow(Img, cmap='gray')
-    #     CS = plt.contour(phi,0, colors='r') 
-    # plt.savefig('level_2_' + str(iter) + '.png')
