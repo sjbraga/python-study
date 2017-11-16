@@ -16,6 +16,8 @@ def gauss_kern():
     g = np.exp( -( x**2 + y**2 ) / (2*sigma**2) )
     return g / g.sum()
 
+
+
 Img = plt.imread("twoObj.bmp")
 Img = Img[::-1] 
 g = gauss_kern()
@@ -85,6 +87,6 @@ while iter<150:
     iter=iter+1
 
     #del ax1.collections[0]
-    ax1.contour(phi, 0, colors='r')
+    ax1.contour(phi, [0.5], colors='r')
     ax_u.set_data(phi)
     fig.canvas.draw()
